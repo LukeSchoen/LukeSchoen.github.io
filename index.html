@@ -1,7 +1,79 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <h1>Hello World!</h1>
-    <p>I'm luke and this is my site.</p>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabbed Interface</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: #1e1e1e;
+            padding: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 255, 0, 0.3);
+        }
+        .tab {
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 2px solid green;
+            background: #1e1e1e;
+            color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .tab:hover, .tab.active {
+            background: green;
+            color: black;
+        }
+        .content {
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid green;
+            border-radius: 5px;
+            background: #1e1e1e;
+            box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('profile')">Profile</div>
+        <div class="tab" onclick="showTab('lobby')">Lobby</div>
+        <div class="tab" onclick="showTab('games')">Games</div>
+        <div class="tab" onclick="showTab('leaderboards')">Leaderboards</div>
+        <div class="tab" onclick="showTab('about')">About</div>
+        <div class="tab" onclick="showTab('support')">Support</div>
+    </div>
+    
+    <div id="content" class="content">
+        <h2>Profile</h2>
+        <p>Welcome to your profile page. Here you can manage your account details.</p>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            const content = {
+                profile: '<h2>Profile</h2><p>Welcome to your profile page. Here you can manage your account details.</p>',
+                lobby: '<h2>Lobby</h2><p>This is the game lobby where you can join rooms and chat with other players.</p>',
+                games: '<h2>Games</h2><p>Here are the available games you can play right now.</p>',
+                leaderboards: '<h2>Leaderboards</h2><p>Check out the top players and their rankings.</p>',
+                about: '<h2>About</h2><p>Learn more about our platform and what we offer.</p>',
+                support: '<h2>Support</h2><p>Need help? Reach out to our support team here.</p>'
+            };
+            
+            document.getElementById('content').innerHTML = content[tabName];
+            
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
 </html>
