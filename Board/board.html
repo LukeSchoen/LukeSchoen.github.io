@@ -14,7 +14,7 @@
         }
         .board {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: 20px;
         }
         .card {
@@ -23,6 +23,9 @@
             padding: 15px;
             width: 250px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.5s ease, transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            position: absolute;
+            left: 20px;
         }
         .card-title {
             font-weight: bold;
@@ -98,7 +101,28 @@
             count += value;
             voteCount.textContent = count;
             voteCount.className = 'vote-count ' + (count >= 0 ? 'positive' : 'negative');
+            setTimeout(sortCards, 50); // Small delay before sorting
         }
+
+        function sortCards() {
+            const board = document.querySelector('.board');
+            const cards = Array.from(board.querySelectorAll('.card'));
+            cards.sort((a, b) => {
+                const aVotes = parseInt(a.querySelector('.vote-count').textContent);
+                const bVotes = parseInt(b.querySelector('.vote-count').textContent);
+                return bVotes - aVotes;
+            });
+            cards.forEach((card, index) => {
+                card.style.transform = `translateY(${index * (card.offsetHeight + 20)}px)`;
+            });
+        }
+
+        // Initial sort and position calculation
+        sortCards();
+
+        // Recalculate positions on window resize
+        window.addEventListener('resize', sortCards);
+    </script>
     </script>
 </body>
 </html>
