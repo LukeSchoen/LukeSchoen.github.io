@@ -16,6 +16,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            position: relative;
         }
         .card {
             background-color: #3c3c3c;
@@ -112,9 +113,13 @@
                 const bVotes = parseInt(b.querySelector('.vote-count').textContent);
                 return bVotes - aVotes;
             });
+            const cardGap = 20; // Fixed gap between cards
+            let currentTop = 0;
             cards.forEach((card, index) => {
-                card.style.transform = `translateY(${index * (card.offsetHeight + 20)}px)`;
+                card.style.top = `${currentTop}px`;
+                currentTop += card.offsetHeight + cardGap;
             });
+            board.style.height = `${currentTop}px`;
         }
 
         // Initial sort and position calculation
