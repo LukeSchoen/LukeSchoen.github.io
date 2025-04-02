@@ -15,7 +15,7 @@
         .add-button {
             position: fixed;
             top: 20px;
-            left: 20px;
+            right: 20px;
             width: 50px;
             height: 50px;
             background-color: #4CAF50;
@@ -47,9 +47,15 @@
             width: 80%;
             max-width: 600px;
         }
+        .creator-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
         .item-creator input,
         .item-creator textarea {
-            width: 100%;
+            width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 10px;
             background-color: #2c2c2c;
@@ -57,12 +63,11 @@
             color: #e0e0e0;
         }
         .item-creator textarea {
-            height: 100px;
+            height: 200px;
             resize: vertical;
         }
         .item-creator button {
             padding: 10px 20px;
-            margin-right: 10px;
             border: none;
             border-radius: 3px;
             cursor: pointer;
@@ -74,6 +79,7 @@
         .item-creator .cancel-btn {
             background-color: #f44336;
             color: white;
+            margin-right: 10px;
         }
         .board {
             display: flex;
@@ -128,15 +134,20 @@
     <button class="add-button" onclick="showItemCreator()">+</button>
     <div class="overlay" id="overlay">
         <div class="item-creator">
+            <div class="creator-top">
+                <div class="vote-container">
+                    <button class="vote-button" onclick="updateVote(1)">▲</button>
+                    <span class="vote-count positive" id="new-vote-count">1</span>
+                    <button class="vote-button" onclick="updateVote(-1)">▼</button>
+                </div>
+                <h2 style="color: white; font-weight: bold; margin: 0;">New Task</h2>
+                <div>
+                    <button class="cancel-btn" onclick="hideItemCreator()">Cancel</button>
+                    <button class="save-btn" onclick="saveNewItem()">Save</button>
+                </div>
+            </div>
             <input type="text" id="new-title" placeholder="Title">
             <textarea id="new-description" placeholder="Description"></textarea>
-            <div class="vote-container">
-                <button class="vote-button" onclick="updateVote(1)">▲</button>
-                <span class="vote-count" id="new-vote-count">0</span>
-                <button class="vote-button" onclick="updateVote(-1)">▼</button>
-            </div>
-            <button class="save-btn" onclick="saveNewItem()">Save</button>
-            <button class="cancel-btn" onclick="hideItemCreator()">Cancel</button>
         </div>
     </div>
     <div class="board">
@@ -226,8 +237,8 @@
         function resetItemCreator() {
             document.getElementById('new-title').value = '';
             document.getElementById('new-description').value = '';
-            document.getElementById('new-vote-count').textContent = '0';
-            document.getElementById('new-vote-count').className = 'vote-count';
+            document.getElementById('new-vote-count').textContent = '1';
+            document.getElementById('new-vote-count').className = 'vote-count positive';
         }
 
         function sortCards() {
