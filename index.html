@@ -1,7 +1,74 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <h1>Hello World!</h1>
-    <p>I'm luke and this is my site.</p>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tibia OT 7.6</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .download-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: url('Button.png') no-repeat;
+            background-size: contain;
+            width: 230px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding-bottom: 21px;
+            font-size: 1.4em;
+            line-height: 1;
+        }
+        .download-btn::before {
+            content: '↓';
+            margin-right: 7px;
+            margin-bottom: 15px;
+        }
+        .download-btn span {
+            display: inline-block;
+            transform: translateY(-20%);
+        }
+        .content-box {
+            background-color: #333333;
+            color: white;
+            padding: 20px;
+            margin: 50px auto;
+            max-width: 960px;
+            min-height: 150vh;
+            overflow-y: auto;
+            border: 2px solid black;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            font-size: 3em;
+            font-family: 'Cinzel', serif;
+        }
+    </style>
+</head>
+<body>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+    <a href="#" class="download-btn"><span>Download Now</span></a>
+    <div class="content-box">
+        <h1>Tibia OT 7.6</h1>
+        <!-- Add more content here -->
+    </div>
+</body>
 </html>
