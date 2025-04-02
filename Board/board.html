@@ -12,6 +12,69 @@
             margin: 0;
             padding: 20px;
         }
+        .add-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1001;
+        }
+        .item-creator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #3c3c3c;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 600px;
+        }
+        .item-creator input,
+        .item-creator textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #2c2c2c;
+            border: 1px solid #4c4c4c;
+            color: #e0e0e0;
+        }
+        .item-creator textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .item-creator button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .item-creator .save-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .item-creator .cancel-btn {
+            background-color: #f44336;
+            color: white;
+        }
         .board {
             display: flex;
             flex-direction: column;
@@ -62,6 +125,20 @@
     </style>
 </head>
 <body>
+    <button class="add-button" onclick="showItemCreator()">+</button>
+    <div class="overlay" id="overlay">
+        <div class="item-creator">
+            <input type="text" id="new-title" placeholder="Title">
+            <textarea id="new-description" placeholder="Description"></textarea>
+            <div class="vote-container">
+                <button class="vote-button" onclick="updateVote(1)">▲</button>
+                <span class="vote-count" id="new-vote-count">0</span>
+                <button class="vote-button" onclick="updateVote(-1)">▼</button>
+            </div>
+            <button class="save-btn" onclick="saveNewItem()">Save</button>
+            <button class="cancel-btn" onclick="hideItemCreator()">Cancel</button>
+        </div>
+    </div>
     <div class="board">
         <div class="card">
             <div class="card-title">Implement Dark Mode</div>
@@ -103,6 +180,54 @@
             voteCount.textContent = count;
             voteCount.className = 'vote-count ' + (count >= 0 ? 'positive' : 'negative');
             setTimeout(sortCards, 50); // Small delay before sorting
+        }
+
+        function showItemCreator() {
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function hideItemCreator() {
+            document.getElementById('overlay').style.display = 'none';
+            resetItemCreator();
+        }
+
+        function updateVote(value) {
+            const voteCount = document.getElementById('new-vote-count');
+            let count = parseInt(voteCount.textContent);
+            count += value;
+            voteCount.textContent = count;
+            voteCount.className = 'vote-count ' + (count >= 0 ? 'positive' : 'negative');
+        }
+
+        function saveNewItem() {
+            const title = document.getElementById('new-title').value;
+            const description = document.getElementById('new-description').value;
+            const voteCount = document.getElementById('new-vote-count').textContent;
+
+            if (title && description) {
+                const newCard = document.createElement('div');
+                newCard.className = 'card';
+                newCard.innerHTML = `
+                    <div class="card-title">${title}</div>
+                    <div class="card-description">${description}</div>
+                    <div class="card-info">Priority: Medium | Assignee: New User</div>
+                    <div class="vote-container">
+                        <button class="vote-button" onclick="vote(this, 1)">▲</button>
+                        <span class="vote-count ${parseInt(voteCount) >= 0 ? 'positive' : 'negative'}">${voteCount}</span>
+                        <button class="vote-button" onclick="vote(this, -1)">▼</button>
+                    </div>
+                `;
+                document.querySelector('.board').appendChild(newCard);
+                hideItemCreator();
+                sortCards();
+            }
+        }
+
+        function resetItemCreator() {
+            document.getElementById('new-title').value = '';
+            document.getElementById('new-description').value = '';
+            document.getElementById('new-vote-count').textContent = '0';
+            document.getElementById('new-vote-count').className = 'vote-count';
         }
 
         function sortCards() {

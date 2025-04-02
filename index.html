@@ -9,6 +9,7 @@
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
+            overflow-y: auto;
         }
         body {
             background-image: url('background.jpg');
@@ -51,9 +52,10 @@
             padding: 20px;
             margin: 50px auto;
             max-width: 960px;
-            min-height: 150vh;
+            min-height: calc(100vh - 100px);
             overflow-y: auto;
             border: 2px solid black;
+            margin-bottom: 500px;
         }
         h1 {
             text-align: center;
