@@ -47,6 +47,21 @@
             display: inline-block;
             transform: translateY(-20%);
         }
+        .classic-btn {
+            top: 100px;
+            background: url('ButtonClassic.png') no-repeat;
+            background-size: contain;
+            width: 260px;
+            height: 80px;
+            padding-bottom: 25px;
+            font-size: 1.3em;
+        }
+        .classic-btn::before {
+            content: '★';
+            color: gold;
+            margin-right: 7px;
+            margin-bottom: 15px;
+        }
         .content-box {
             background-color: #333333;
             color: white;
@@ -70,6 +85,7 @@
 <body>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
     <a href="client.zip" class="download-btn" download><span>Download Now</span></a>
+    <a href="classic.zip" class="download-btn classic-btn" download><span>Classic Version</span></a>
     <div class="content-box">
         <h1>Tibia OT 7.6</h1>
         <div class="nav-buttons">
