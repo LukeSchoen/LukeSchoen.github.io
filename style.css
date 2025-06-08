@@ -1,0 +1,509 @@
+:root {
+    /* Theme Inversion: Main background is dark, foreground elements are light */
+    --bg-dark-texture: url('background_dark.png');
+    --bg-light-texture: url('background.png');
+
+    --text-on-dark-bg: #ffffff; /* White text for dark backgrounds */
+    --text-on-light-bg: #ffffff; /* White text for light backgrounds */
+
+    --accent-color-dark-bg: #17a2b8; /* Tealish accent for dark backgrounds */
+    --accent-color-light-bg: #007bff; /* Blue accent for light backgrounds */
+
+    --primary-surface-light: #ffffff; /* Pure white for light surfaces if needed underneath texture */
+    --primary-surface-dark: #1a1a1a; /* Dark surface for dark elements */
+
+    --text-on-light-accent: #ffffff; /* White text on light accent color (e.g., blue button) */
+    --text-on-dark-accent: #1a1a1a;   /* Dark text on dark accent color (e.g., teal button) */
+
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    font-family: var(--font-main);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+    background-image: var(--bg-dark-texture);
+    color: var(--text-on-dark-bg);
+    background-repeat: repeat;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor; /* IE */
+    padding-bottom: 1px; /* Space for the new footer */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: background-color 0.3s;
+    background-image: var(--bg-light-texture);
+    background-repeat: repeat;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Lighter shadow for light bg */
+}
+
+.nav-logo {
+    font-size: 3em;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* text-shadow is now handled by the animation */
+    animation: goldenFireBreath 3s infinite ease-in-out;
+}
+
+@keyframes goldenFireBreath {
+    0%, 100% {
+        text-shadow:
+        0 0 8px rgba(255,255,255,0),   /* Brighter inner white core */            0 0 18px rgba(255, 255, 255, 0.9), /* Brighter Gold */
+        0 0 30px rgba(247, 223, 9, 0), /* Brighter Orange */
+        0 0 45px rgba(250, 216, 22, 0), /* Brighter Fiery Orange */
+        0 0 60px rgba(224, 204, 20, 0);/* Brighter Goldenrod */
+    }
+    50% {
+        text-shadow:
+            0 0 8px rgba(255,255,255,1),   /* Brighter inner white core */            0 0 18px rgba(255, 255, 255, 0.9), /* Brighter Gold */
+            0 0 30px rgba(247, 223, 9, 0.8), /* Brighter Orange */
+            0 0 45px rgba(250, 216, 22, 0.8), /* Brighter Fiery Orange */
+            0 0 60px rgba(224, 204, 20, 0.9);/* Brighter Goldenrod */
+    }
+}
+
+/* Old shine animation - can be removed or kept if used elsewhere */
+/*
+@keyframes shine {
+    0% { filter: brightness(100%); }
+    50% { filter: brightness(120%); }
+    100% { filter: brightness(100%); }
+}
+*/
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 0.7rem 1.2rem;
+    border-radius: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s;
+    color: var(--text-on-light-bg);
+}
+
+.nav-links a:hover,
+.nav-links a.active-tab {
+    background: linear-gradient(to right, rgba(191, 149, 63, 0.6), rgba(252, 246, 186, 0.6), rgba(179, 135, 40, 0.6), rgba(251, 245, 183, 0.6), rgba(170, 119, 28, 0.6));
+    color: #ffffff;
+    border-color: rgba(251, 245, 183, 0.5);
+    box-shadow: 0 0 30px rgba(251, 245, 183, 0.4),
+                0 0 60px rgba(251, 245, 183, 0.2);
+    animation: shine 2s infinite;
+}
+
+.container {
+    padding: 90px 2rem 2rem; /* Increased top padding to accommodate larger navbar */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#subpage-view.container {
+    padding-top: 1rem; /* Reduced top padding for subpage content like news */
+}
+
+.tab-content {
+    padding: 2rem;
+    display: none;
+    border-radius: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    margin-top: 1rem;
+    animation: fadeIn 0.5s ease-in-out;
+    background-image: var(--bg-light-texture);
+    background-repeat: repeat;
+    image-rendering: pixelated;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    color: var(--text-on-light-bg);
+}
+
+.tab-content.active-content {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(0px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 2em;
+    border-bottom: 2px solid;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    /* Default for h2 on dark body background */
+    color: #ffffff;
+    border-bottom-color: var(--accent-color-dark-bg);
+}
+
+#subpage-view h2 {
+    margin-top: 0; /* Ensure no top margin for h2 in news */
+}
+
+/* h2 inside light-textured containers like .tab-content */
+.tab-content h2 {
+    color: #ffffff;
+    border-bottom-color: var(--accent-color-light-bg);
+}
+
+/* Play Tab Styles */
+.download-button-with-gif {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    border: 4px solid #FFD700; /* Gold border */
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.download-button-with-gif img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.download-button-with-gif .btn-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.4); /* Increased transparency */
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5em;
+    text-shadow: 0 0 15px #FFD700;
+    transition: background 0.3s ease;
+}
+
+.download-button-with-gif:hover .btn-text {
+    background: rgba(0, 0, 0, 0); /* Fully transparent on hover */
+}
+
+.download-button-with-gif:hover {
+    box-shadow: 0 6px 40px rgba(255, 215, 0, 0.8);
+}
+
+.btn {
+    padding: 1rem 2rem;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: #fff; /* Text color for buttons, assuming gradient backgrounds */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    width: 100%;
+}
+
+.btn:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.btn .version {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin-left: 0.5rem;
+}
+
+.btn-latest {
+    background: linear-gradient(135deg, #FFD700, #D4AF37); /* Gold gradient */
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+.btn-latest:hover {
+    background: linear-gradient(135deg, #FFDF00, #CFB53B); /* Brighter gold on hover */
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+}
+
+/* News Tab Styles */
+.news-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.news-item {
+    padding: 1.5rem;
+    border-radius: 0;
+    transition: box-shadow 0.3s;
+    background-image: var(--bg-light-texture);
+    background-repeat: repeat;
+    image-rendering: pixelated;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    color: var(--text-on-light-bg);
+}
+
+.news-item:hover,
+.news-item.active {
+    box-shadow: 0 6px 40px rgba(255, 215, 0, 0.8);
+    /* border-color: rgba(251, 245, 183, 0.5); /* Removed for consistency with download button */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.news-item h3 {
+    margin-top: 0.0rem;
+    font-size: 1.4rem;
+    background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 15px rgba(251, 245, 183, 0.6),
+                 0 0 30px rgba(251, 245, 183, 0.4);
+}
+
+.news-meta {
+    font-size: 0.9em; /* Corrected from 0.9 to 0.9em */
+    opacity: 0.7;
+    margin-bottom: 0.5rem; /* Added some margin for better spacing */
+    color: var(--text-on-light-bg); /* Ensure meta text is also readable */
+}
+
+/* Ensure h2 in subpage-view (news or tasks) has consistent styling */
+#subpage-view h2 {
+    color: #ffffff; /* Or var(--text-on-dark-bg) if that's the intent for these sections */
+    border-bottom-color: var(--accent-color-light-bg); /* Match tab-content h2 style */
+    margin-top: 0; 
+    font-size: 2em;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Tasks Tab Styles (replaces External Content) */
+.task-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.task-item {
+    padding: 1.5rem;
+    border-radius: 0;
+    transition: box-shadow 0.3s;
+    background-image: var(--bg-light-texture);
+    background-repeat: repeat;
+    image-rendering: pixelated;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    color: var(--text-on-light-bg);
+}
+
+.task-item:hover,
+.task-item.active {
+    box-shadow: 0 6px 40px rgba(255, 215, 0, 0.8);
+    /* border-color: rgba(251, 245, 183, 0.5); /* Removed for consistency with download button */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-item h3 {
+    margin-top: 0.0rem;
+    font-size: 1.4rem;
+    background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 15px rgba(251, 245, 183, 0.6),
+                 0 0 30px rgba(251, 245, 183, 0.4);
+}
+
+.task-meta {
+    font-size: 0.9em; /* Corrected from 0.9 to 0.9em */
+    opacity: 0.7;
+    margin-bottom: 0.5rem; /* Added some margin for better spacing */
+    color: var(--text-on-light-bg);
+}
+
+/* Styles for the previous draggable task board (no longer in use by the primary 'Tasks' tab) */
+.task-board {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto; /* Allows horizontal scrolling if columns exceed width */
+}
+
+.task-column {
+    flex: 1;
+    min-width: 280px;
+    padding: 1rem;
+    border-radius: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    background-image: var(--bg-light-texture);
+    background-repeat: repeat;
+    image-rendering: pixelated;
+    color: var(--text-on-light-bg);
+}
+
+.task-column h3 {
+    text-align: center;
+    margin-top: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ccc; /* Lighter border for light bg */
+    color: var(--text-on-light-bg); /* Ensure heading is readable */
+}
+
+.task-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    cursor: grab;
+    transition: box-shadow 0.2s;
+    background-image: var(--bg-light-texture);
+    background-repeat: repeat;
+    image-rendering: pixelated;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: var(--text-on-light-bg);
+}
+
+.task-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.task-id {
+    font-size: 0.8em;
+    opacity: 0.6;
+    float: right;
+}
+
+.task-priority {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    border-right: 1px solid rgba(0, 0, 0, 0.25);
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #fff; /* Default white text for priority tags */
+}
+
+.high-priority {
+    background-color: #dc3545;
+}
+
+.medium-priority {
+    background-color: #ffc107;
+    color: #333; /* Dark text for yellow bg */
+}
+
+.low-priority {
+    background-color: #28a745;
+}
+
+.task-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.task-description {
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Footer Styles */
+footer {
+    background-image: var(--bg-light-texture);
+    background-repeat: repeat;
+    image-rendering: pixelated;
+    color: var(--text-on-light-bg);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 1.1em;
+    position: fixed; /* Or relative/absolute depending on desired behavior */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .nav-links {
+        margin-top: 1rem;
+        flex-direction: column;
+        width: 100%;
+    }
+    .nav-links li {
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+    .nav-links a {
+        display: block;
+        text-align: center;
+    }
+    /* Removed .theme-switcher styles as button is gone */
+    .container {
+        padding-top: 180px; /* Increased padding for taller mobile navbar */
+    }
+    .task-board {
+        flex-direction: column;
+    }
+    footer {
+        position: relative; /* Avoid overlap issues on mobile */
+        margin-top: 2rem;
+    }
+}

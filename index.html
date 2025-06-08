@@ -3,141 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tibia OT 7.6</title>
-    <style>
-        body, html {
-            width: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            overflow-y: scroll;
-        }
-        body {
-            background-image: url('Background.png');
-            background-size: fill;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-color: black;
-        }
-        .download-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: url('Button.png') no-repeat;
-            background-size: contain;
-            width: 230px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            padding-bottom: 21px;
-            font-size: 1.4em;
-            line-height: 1;
-        }
-        .download-btn::before {
-            content: '↓';
-            margin-right: 7px;
-            margin-bottom: 15px;
-        }
-        .download-btn span {
-            display: inline-block;
-            transform: translateY(-20%);
-        }
-        .classic-btn {
-            top: 100px;
-            background: url('ButtonClassic.png') no-repeat;
-            background-size: contain;
-            width: 260px;
-            height: 80px;
-            padding-bottom: 25px;
-            font-size: 1.3em;
-        }
-        .classic-btn::before {
-            content: '★';
-            color: gold;
-            margin-right: 7px;
-            margin-bottom: 15px;
-        }
-        .content-box {
-            background-color: #333333;
-            color: white;
-            padding: 20px;
-            margin: 50px auto;
-            max-width: 1080px;
-            min-height: calc(100vh - 100px);
-            overflow-y: auto;
-            border: 2px solid black;
-            margin-top: 800px;
-            margin-bottom: 800px;
-        }
-        h1 {
-            text-align: center;
-            margin-top: 0;
-            font-size: 3em;
-            font-family: 'Cinzel', serif;
-        }
-    </style>
+    <title>TibiaOT</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
-    <a href="client.zip" class="download-btn" download><span>Download Now</span></a>
-    <a href="classic.zip" class="download-btn classic-btn" download><span>Classic Version</span></a>
-    <div class="content-box">
-        <h1>Tibia OT 7.6</h1>
-        <div class="nav-buttons">
-            <button class="nav-btn active" data-target="news">News</button>
-            <button class="nav-btn" data-target="status">Status</button>
-            <button class="nav-btn" data-target="tasks">Tasks</button>
-        </div>
-        <iframe src="Tasks/board.html" style="width:100%; height:800px; border:none;"></iframe>
-    </div>
-    <style>
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        .nav-btn {
-            padding: 20px 40px;
-            background-color: #444;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            font-size: 2em;
-            width: 300px;
-        }
-        .nav-btn:hover {
-            background-color: #555;
-            transform: translateY(-2px);
-        }
-        .nav-btn.active {
-            background-color: #666;
-            box-shadow: 0 0 20px gold;
-        }
-    </style>
-    <script>
+    <nav class="navbar">
+        <div class="nav-logo">GALDIA</div>
+        <ul class="nav-links">
+            <li><a href="#play" class="nav-tab active-tab" data-tab="play">Play</a></li>
+            <li><a href="#news" class="nav-tab" data-tab="news">News</a></li>
+            <li><a href="#tasks" class="nav-tab" data-tab="tasks">Tasks</a></li>
+        </ul>
+    </nav>
 
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                const iframe = document.querySelector('iframe');
-                if (this.dataset.target === 'news') {
-                    iframe.src = 'News/News.html';
-                } else if (this.dataset.target === 'tasks') {
-                    iframe.src = 'Tasks/board.html';
+    <div class="container">
+        <section id="play" class="tab-content active-content">
+            <div class="download-button-with-gif">
+                <img src="Walk2.gif" alt="Walk animation">
+                <div class="btn-text">Game Download <span class="version">(v1.2.3-beta)</span></div>
+            </div>
+        </section>
+
+        <!-- News and External Content sections are loaded into #subpage-view -->
+
+    </div>
+
+    <!-- Subpage container for dynamic content -->
+    <div id="subpage-view" style="display:none;" class="container"></div>
+
+    <script src="script.js"></script>
+    <script>
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.addEventListener('click', function (e) {
+            const tabName = this.getAttribute('data-tab');
+            const allTabs = document.querySelectorAll('.tab-content');
+            const subpageView = document.getElementById('subpage-view');
+
+            if (tabName === 'news' || tabName === 'tasks') {
+                e.preventDefault();
+                allTabs.forEach(t => t.style.display = 'none');
+                subpageView.style.display = 'none'; // Hide subpage view initially
+
+                let contentFile = '';
+                if (tabName === 'news') {
+                    contentFile = 'http://customot76.ddns.net:6100/news-content.html';
+                } else if (tabName === 'tasks') {
+                    contentFile = 'http://customot76.ddns.net:6100/tasks-content.html';
                 }
-            });
+
+                fetch(contentFile)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text();
+                    })
+                    .then(html => {
+                        subpageView.innerHTML = html;
+                        subpageView.style.display = 'block';
+                    })
+                    .catch(err => {
+                        subpageView.innerHTML = `<p>Error loading ${tabName}. ${err.message}</p>`;
+                        subpageView.style.display = 'block';
+                    });
+            } else {
+                allTabs.forEach(t => {
+                    t.style.display = t.id === tabName ? 'block' : 'none';
+                });
+                subpageView.style.display = 'none';
+            }
+
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active-tab'));
+            this.classList.add('active-tab');
         });
+    });
     </script>
+
+    <footer></footer>
 </body>
 </html>
