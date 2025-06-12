@@ -1,7 +1,6 @@
 :root {
     /* Theme Inversion: Main background is dark, foreground elements are light */
     --bg-dark-texture: url('background_dark.png');
-    --bg-light-texture: url('background.png');
 
     --text-on-dark-bg: #ffffff; /* White text for dark backgrounds */
     --text-on-light-bg: #ffffff; /* White text for light backgrounds */
