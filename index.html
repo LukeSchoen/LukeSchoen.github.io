@@ -1,84 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TibiaOT</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TibiaOT</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-logo">GALDIA</div>
-        <ul class="nav-links">
-            <li><a href="#play" class="nav-tab active-tab" data-tab="play">Play</a></li>
-            <li><a href="#news" class="nav-tab" data-tab="news">News</a></li>
-            <li><a href="#tasks" class="nav-tab" data-tab="tasks">Tasks</a></li>
-        </ul>
-    </nav>
+  <nav class="navbar">
+    <div class="nav-logo">GALDIA</div>
+    <ul class="nav-links">
+      <li><a href="#play" class="nav-tab active-tab" data-tab="play">Play</a></li>
+      <li><a href="#news" class="nav-tab" data-tab="news">News</a></li>
+      <li><a href="#tasks" class="nav-tab" data-tab="tasks">Tasks</a></li>
+    </ul>
+  </nav>
 
-    <div class="container">
-        <section id="play" class="tab-content active-content">
-            <div class="download-button-with-gif">
-                <img src="Walk2.gif" alt="Walk animation">
-                <div class="btn-text">Game Download <span class="version">(v1.2.3-beta)</span></div>
-            </div>
-        </section>
+  <div class="container">
+    <section id="play" class="tab-content active-content">
+      <div class="download-button-with-gif">
+        <img src="Walk2.gif" alt="Walk animation" />
+        <div class="btn-text">Game Download <span class="version">(v1.2.3-beta)</span></div>
+      </div>
+    </section>
+  </div>
 
-        <!-- News and External Content sections are loaded into #subpage-view -->
+  <!-- Subpage container for dynamic content -->
+  <div id="subpage-view" style="display:none;" class="container"></div>
 
-    </div>
+  <script>
+    const projectId = "otserver-25bee";
 
-    <!-- Subpage container for dynamic content -->
-    <div id="subpage-view" style="display:none;" class="container"></div>
-
-    <script src="script.js"></script>
-    <script>
     document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.addEventListener('click', function (e) {
-            const tabName = this.getAttribute('data-tab');
-            const allTabs = document.querySelectorAll('.tab-content');
-            const subpageView = document.getElementById('subpage-view');
+      tab.addEventListener('click', function (e) {
+        const tabName = this.getAttribute('data-tab');
+        const allTabs = document.querySelectorAll('.tab-content');
+        const subpageView = document.getElementById('subpage-view');
 
-            if (tabName === 'news' || tabName === 'tasks') {
-                e.preventDefault();
-                allTabs.forEach(t => t.style.display = 'none');
-                subpageView.style.display = 'none'; // Hide subpage view initially
+        if (tabName === 'news' || tabName === 'tasks') {
+          e.preventDefault();
+          allTabs.forEach(t => t.style.display = 'none');
+          subpageView.style.display = 'none'; // Hide subpage view initially
 
-                let contentFile = '';
-                if (tabName === 'news') {
-                    contentFile = 'http://customot76.ddns.net:6100/news-content.html';
-                } else if (tabName === 'tasks') {
-                    contentFile = 'http://customot76.ddns.net:6100/tasks-content.html';
-                }
+          const documentPath = `data/${tabName}`;
+          const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${documentPath}`;
 
-                fetch(contentFile)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.text();
-                    })
-                    .then(html => {
-                        subpageView.innerHTML = html;
-                        subpageView.style.display = 'block';
-                    })
-                    .catch(err => {
-                        subpageView.innerHTML = `<p>Error loading ${tabName}. ${err.message}</p>`;
-                        subpageView.style.display = 'block';
-                    });
-            } else {
-                allTabs.forEach(t => {
-                    t.style.display = t.id === tabName ? 'block' : 'none';
-                });
-                subpageView.style.display = 'none';
-            }
+          fetch(url)
+            .then(response => {
+              if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+              return response.json();
+            })
+            .then(data => {
+              const html = data.fields?.text?.stringValue;
+              if (!html) throw new Error("No 'text' field found.");
+              subpageView.innerHTML = html;
+              subpageView.style.display = 'block';
+            })
+            .catch(err => {
+              subpageView.innerHTML = `<p>Error loading ${tabName}: ${err.message}</p>`;
+              subpageView.style.display = 'block';
+              console.error("Firestore fetch error:", err);
+            });
 
-            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active-tab'));
-            this.classList.add('active-tab');
-        });
+        } else {
+          allTabs.forEach(t => {
+            t.style.display = t.id === tabName ? 'block' : 'none';
+          });
+          subpageView.style.display = 'none';
+        }
+
+        document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active-tab'));
+        this.classList.add('active-tab');
+      });
     });
-    </script>
+  </script>
 
-    <footer></footer>
+  <footer></footer>
 </body>
 </html>
