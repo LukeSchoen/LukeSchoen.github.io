@@ -1,6 +1,7 @@
 :root {
     /* Theme Inversion: Main background is dark, foreground elements are light */
     --bg-dark-texture: url('background_dark.png');
+    --bg-light-texture: url('Background_light.png');
 
     --text-on-dark-bg: #ffffff; /* White text for dark backgrounds */
     --text-on-light-bg: #ffffff; /* White text for light backgrounds */
@@ -29,7 +30,7 @@ body {
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-optimize-contrast;
     -ms-interpolation-mode: nearest-neighbor; /* IE */
-    padding-bottom: 1px; /* Space for the new footer */
+    padding-bottom: 64px; /* Space for the new footer */
 }
 
 .navbar {
