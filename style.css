@@ -22,7 +22,7 @@ body {
     font-family: var(--font-main);
     margin: 0;
     padding: 0;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.1s, color 0.1s;
     background-image: var(--bg-dark-texture);
     color: var(--text-on-dark-bg);
     background-repeat: repeat;
@@ -43,7 +43,7 @@ body {
     left: 0;
     right: 0;
     z-index: 1000;
-    transition: background-color 0.3s;
+    transition: background-color 0.1s;
     background-image: var(--bg-light-texture);
     background-repeat: repeat;
     image-rendering: pixelated;
@@ -51,6 +51,17 @@ body {
     image-rendering: -webkit-optimize-contrast;
     -ms-interpolation-mode: nearest-neighbor;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Lighter shadow for light bg */
+}
+
+.nav-logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo-face {
+    width: 50px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+    margin-left: 10px; /* Adjust spacing as needed */
 }
 
 .nav-logo {
@@ -113,7 +124,7 @@ body {
     border-left: 1px solid rgba(255, 255, 255, 0.4);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     border-right: 1px solid rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.1s, color 0.1s;
     color: var(--text-on-light-bg);
 }
 
@@ -270,7 +281,7 @@ h2 {
 .news-item {
     padding: 1.5rem;
     border-radius: 0;
-    transition: box-shadow 0.3s;
+    transition: box-shadow 0.1s;
     background-image: var(--bg-light-texture);
     background-repeat: repeat;
     image-rendering: pixelated;
@@ -285,7 +296,7 @@ h2 {
 .news-item.active {
     box-shadow: 0 6px 40px rgba(255, 215, 0, 0.8);
     /* border-color: rgba(251, 245, 183, 0.5); /* Removed for consistency with download button */
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .news-item h3 {
@@ -328,7 +339,6 @@ h2 {
 .task-item {
     padding: 1.5rem;
     border-radius: 0;
-    transition: box-shadow 0.3s;
     background-image: var(--bg-light-texture);
     background-repeat: repeat;
     image-rendering: pixelated;
@@ -343,7 +353,6 @@ h2 {
 .task-item.active {
     box-shadow: 0 6px 40px rgba(255, 215, 0, 0.8);
     /* border-color: rgba(251, 245, 183, 0.5); /* Removed for consistency with download button */
-    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .task-item h3 {
@@ -364,11 +373,9 @@ h2 {
     color: var(--text-on-light-bg);
 }
 
-/* Styles for the previous draggable task board (no longer in use by the primary 'Tasks' tab) */
 .task-board {
     display: flex;
-    gap: 1.5rem;
-    overflow-x: auto; /* Allows horizontal scrolling if columns exceed width */
+    overflow-x: auto;
 }
 
 .task-column {
@@ -395,20 +402,13 @@ h2 {
 }
 
 .task-card {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     border-left: 1px solid rgba(255, 255, 255, 0.3);
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
     border-right: 1px solid rgba(0, 0, 0, 0.15);
-    cursor: grab;
-    transition: box-shadow 0.2s;
     background-image: var(--bg-light-texture);
     background-repeat: repeat;
     image-rendering: pixelated;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    color: var(--text-on-light-bg);
 }
 
 .task-card:hover {
